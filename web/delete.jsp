@@ -20,19 +20,35 @@
         <span class="test">${requestScope["message"]}</span>
     </c:if>
 </p>
+<p>
+<h1>Deleting Team ${requestScope["delete"].getName()}</h1>
+<h3>Are you sure?</h3>
+</p>
 <form method="post">
-    <fieldset>
-        <legend>delete</legend>
-        <table>
-            <tr>
-                <td>Name</td>
-                <td>${requestScope["delete"].getName()}</td>
-            </tr>
+    <%--<fieldset>--%>
+        <%--<legend>delete</legend>--%>
+        <%--<table>--%>
+            <%--<tr>--%>
+                <%--<td>Name</td>--%>
+                <%--<td>${requestScope["delete"].getName()}</td>--%>
+            <%--</tr>--%>
+            <%--<tr>--%>
+                <%--<td>Age</td>--%>
+                <%--<td>${requestScope["delete"].getAge()}</td>--%>
+            <%--</tr>--%>
+            <%--<tr>--%>
+                <%--<td>Height</td>--%>
+                <%--<td>${requestScope["delete"].getHeight()}</td>--%>
+            <%--</tr>--%>
+            <%--<tr>--%>
+                <%--<td>Nationality</td>--%>
+                <%--<td>${requestScope["delete"].getNationality()}</td>--%>
+            <%--</tr>--%>
             <tr>
                 <td><input type="submit" value="delete"></td>
             </tr>
-        </table>
-    </fieldset>
+        <%--</table>--%>
+    <%--</fieldset>--%>
 </form>
 </body>
 </html>

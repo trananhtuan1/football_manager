@@ -13,14 +13,18 @@
 </head>
 <body>
 <p>
-    <a href="/display?action=create">Create Name</a>
+    <a href="/display?action=create">Create player</a>
 </p>
 <p>
-<h1>TEAM</h1>
+<h1>TEAMS</h1>
 <table border="1">
     <tr>
         <td>#</td>
         <td>Name</td>
+        <td>Age</td>
+        <td>Height</td>
+        <td>Nationality</td>
+        <td>Position</td>
         <td>edit</td>
         <td>delete</td>
     </tr>
@@ -28,6 +32,10 @@
         <tr>
             <td><a href="/display?action=view&id=${view.getId()}">${view.getId()}</a></td>
             <td>${view.getName()}</td>
+            <td>${view.getAge()}</td>
+            <td>${view.getHeight()}</td>
+            <td>${view.getNationality()}</td>
+            <td>${view.getPostion()}</td>
             <td><a href="/display?action=edit&id=${view.getId()}">edit</a></td>
             <td><a href="/display?action=delete&id=${view.getId()}">delete</a></td>
         </tr>

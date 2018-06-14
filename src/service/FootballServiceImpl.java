@@ -1,6 +1,5 @@
 package service;
 
-import jdk.nashorn.internal.scripts.JD;
 import model.Football;
 
 import java.sql.*;
@@ -33,6 +32,10 @@ public class FootballServiceImpl implements FootballService {
             Football football = new Football();
             football.setId(resultSet.getInt("id"));
             football.setName(resultSet.getString("name"));
+            football.setAge(resultSet.getInt("age"));
+            football.setHeight(resultSet.getInt("height"));
+            football.setNationality(resultSet.getString("nationality"));
+            football.setPostion(resultSet.getString("postion"));
             footballs.add(football);
         }
         resultSet.close();
@@ -50,9 +53,13 @@ public class FootballServiceImpl implements FootballService {
 
         PreparedStatement preparedStatement = null;
         String sql;
-        sql = "INSERT INTO football_manager(name) values(?)";
+        sql = "INSERT INTO football_manager(name, age, height, nationality, postion) values(?, ?, ? ,? ,?)";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, football.getName());
+        preparedStatement.setInt(2, football.getAge());
+        preparedStatement.setInt(3, football.getHeight());
+        preparedStatement.setString(4, football.getNationality());
+        preparedStatement.setString(5, football.getPostion());
 
         int insertRecord = preparedStatement.executeUpdate();
 
@@ -76,6 +83,10 @@ public class FootballServiceImpl implements FootballService {
         while (resultSet.next()) {
             football.setId(resultSet.getInt("id"));
             football.setName(resultSet.getString("name"));
+            football.setAge(resultSet.getInt("age"));
+            football.setHeight(resultSet.getInt("height"));
+            football.setNationality(resultSet.getString("nationality"));
+            football.setPostion(resultSet.getString("postion"));
         }
         connection.close();
         preparedStatement.close();
@@ -92,10 +103,14 @@ public class FootballServiceImpl implements FootballService {
 
         PreparedStatement preparedStatement = null;
         String sql;
-        sql = "UPDATE football_manager SET name = ? where id = ?";
+        sql = "UPDATE football_manager SET name = ?, age = ?, height = ?, nationality = ?, postion = ? where id = ?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, football.getName());
-        preparedStatement.setInt(2, football.getId());
+        preparedStatement.setInt(2, football.getAge());
+        preparedStatement.setInt(3, football.getHeight());
+        preparedStatement.setString(4, football.getNationality());
+        preparedStatement.setString(5, football.getPostion());
+        preparedStatement.setInt(6, football.getId());
 
         int insertRecord = preparedStatement.executeUpdate();
 

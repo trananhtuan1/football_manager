@@ -20,17 +20,50 @@
 <p>
     <a href="/display">Back</a>
 </p>
+<p>
+    <h1>Create new player</h1>
+</p>
 <form method="post">
     <p>
     <fieldset>
-        <legend>Post Name</legend>
+        <legend>Post Information</legend>
         <table>
             <tr>
                 <td>Name</td>
                 <td><input type="text" name="name" id="name"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Post"></td>
+                <td>Age</td>
+                <td><input type="text" name="age" id="age"></td>
+            </tr>
+            <tr>
+                <td>Height</td>
+                <td><input type="text" name="height" id="height"></td>
+            </tr>
+            <tr>
+                <td>Nationality</td>
+                <td>
+                    <select name="nationality" id="nationality">
+                        <option value="KOREA">KOREA</option>
+                        <option value="USA">USA</option>
+                        <option value="Ha Noi">Ha Noi</option>
+                        <option value="Viet Nam" selected>Viet Nam</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Position</td>
+                <td>
+                    <select name="postion" id="postion">
+                        <option value="tien dao">tien dao</option>
+                        <option value="tien ve">tien ve</option>
+                        <option value="thu mon">thu mon</option>
+                        <option value="hau ve" selected>hau ve</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Create player"></td>
             </tr>
         </table>
     </fieldset>

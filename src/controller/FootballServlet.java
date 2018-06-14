@@ -37,7 +37,6 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
 
     private void deleteFootball(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
         try {
             Football football = this.footballService.findById(id);
             RequestDispatcher dispatcher;
@@ -45,9 +44,9 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
                 dispatcher = request.getRequestDispatcher("/error.jsp");
             } else {
                 this.footballService.remove(id);
-                response.sendRedirect("/dispatcher");
-
+//                dispatcher = request.getRequestDispatcher("/delete.jsp");
             }
+            response.sendRedirect("/display");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -60,6 +59,11 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
     private void editFootball(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int height = Integer.parseInt(request.getParameter("height"));
+        String nationality = request.getParameter("nationality");
+        String postion = request.getParameter("postion");
+
         try {
             Football football = this.footballService.findById(id);
             RequestDispatcher dispatcher;
@@ -67,6 +71,10 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
                 dispatcher = request.getRequestDispatcher("/error.jsp");
             } else {
                 football.setName(name);
+                football.setAge(age);
+                football.setHeight(height);
+                football.setNationality(nationality);
+                football.setPostion(postion);
                 this.footballService.update(id, football);
                 request.setAttribute("edit", football);
                 request.setAttribute("message", "done");
@@ -87,8 +95,12 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
     private void createFootball(HttpServletRequest request, HttpServletResponse response) {
         try {
             String name = request.getParameter("name");
+            int age = Integer.parseInt(request.getParameter("age"));
+            int height = Integer.parseInt(request.getParameter("height"));
+            String nationality = request.getParameter("nationality");
+            String postion = request.getParameter("postion");
 
-            Football football = new Football(name);
+            Football football = new Football(name, age, height, nationality, postion);
             this.footballService.save(football);
             request.setAttribute("message", "done");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
@@ -117,14 +129,40 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
                 showEditFootball(request, response);
                 break;
             case "delete":
-                showDelete(request, response);
+                showDeleteFootball(request, response);
+            case "view":
+                showViewFootball(request, response);
+                break;
             default:
                 showListFootballs(request, response);
                 break;
         }
     }
 
-    private void showDelete(HttpServletRequest request, HttpServletResponse response) {
+    private void showViewFootball(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            Football football = this.footballService.findById(id);
+            RequestDispatcher dispatcher;
+            if (football == null) {
+                dispatcher = request.getRequestDispatcher("/error.jsp");
+            } else {
+                request.setAttribute("view", football);
+                dispatcher = request.getRequestDispatcher("/view.jsp");
+            }
+            dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showDeleteFootball(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         try {
             Football football = this.footballService.findById(id);
