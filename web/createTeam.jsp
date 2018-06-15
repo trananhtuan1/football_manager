@@ -12,6 +12,7 @@
     <title>Title</title>
 </head>
 <body>
+<p> </p>
 <p>
     <c:if test='${requestScope["message"]!=null}'>
         <span class="test">${requestScope["message"]}</span>

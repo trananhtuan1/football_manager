@@ -25,6 +25,7 @@
         <td>Height</td>
         <td>Nationality</td>
         <td>Position</td>
+        <td>Team</td>
         <td>edit</td>
         <td>delete</td>
     </tr>

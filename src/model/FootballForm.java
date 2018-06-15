@@ -1,23 +1,23 @@
 package model;
 
-public class Football {
+public class FootballForm {
     private int id;
     private String name;
     private int age;
     private int height;
     private String nationality;
     private String postion;
-    private int teamId;
+    private String teamName;
 
-    public Football(){}
+    public FootballForm(){}
 
-    public Football(String name, int age, int height, String nationality, String postion, int teamId){
+    public FootballForm(String name, int age, int height, String nationality, String postion, String teamName){
         this.name = name;
         this.age = age;
         this.height = height;
         this.nationality = nationality;
         this.postion = postion;
-        this.teamId = teamId;
+        this.teamName = teamName;
     }
 
     public int getId() {
@@ -68,12 +68,12 @@ public class Football {
         this.postion = postion;
     }
 
-    public int getTeamId() {
-        return teamId;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }
 

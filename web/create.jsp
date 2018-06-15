@@ -21,7 +21,7 @@
     <a href="/display">Back</a>
 </p>
 <p>
-    <h1>Create new player</h1>
+<h1>Create new player</h1>
 </p>
 <form method="post">
     <p>
@@ -63,7 +63,16 @@
                 </td>
             </tr>
             <tr>
-                <td><input type="text" name="name"></td>
+                <td>Team</td>
+                <td>
+                    <select name="teamId" id="teamId">
+                        <c:forEach var="teamName" items='${requestScope["teams"]}'>
+                            <option value="${teamName.getId()}">
+                                    ${teamName.getName()}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><input type="submit" value="Create player"></td>

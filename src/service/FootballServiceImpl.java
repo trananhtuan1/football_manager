@@ -1,6 +1,8 @@
 package service;
 
 import model.Football;
+import model.FootballForm;
+import model.Teams;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,28 +18,28 @@ public class FootballServiceImpl implements FootballService {
     }
 
     @Override
-    public List<Football> findAll() throws ClassNotFoundException, SQLException {
+    public List<FootballForm> findAll() throws ClassNotFoundException, SQLException {
         Class.forName(JDBC_DRIVER);
-        Connection connection = null;
-        connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
         PreparedStatement preparedStatement = null;
         String sql;
-        sql = "SELECT football_manager.id,football_manager.name, age, height, nationality, postion, teams.name as team from football_manager join teams on football_manager.teamId = teams.id ";
+        sql = "SELECT fm.id,fm.name, fm.age, fm.height, fm.nationality, fm.postion, t.name as teamName" +
+                " from football_manager as fm left join teams as t on fm.teamId=t.id";
         preparedStatement = connection.prepareStatement(sql);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        List<Football> footballs = new ArrayList<>();
+        List<FootballForm> footballs = new ArrayList<>();
         while (resultSet.next()) {
-            Football football = new Football();
-            football.setId(resultSet.getInt("id"));
-            football.setName(resultSet.getString("name"));
-            football.setAge(resultSet.getInt("age"));
-            football.setHeight(resultSet.getInt("height"));
-            football.setNationality(resultSet.getString("nationality"));
-            football.setPostion(resultSet.getString("postion"));
-            football.setTeam(resultSet.getString("team"));
-            footballs.add(football);
+            FootballForm footballForm = new FootballForm();
+            footballForm.setId(resultSet.getInt("id"));
+            footballForm.setName(resultSet.getString("name"));
+            footballForm.setAge(resultSet.getInt("age"));
+            footballForm.setHeight(resultSet.getInt("height"));
+            footballForm.setNationality(resultSet.getString("nationality"));
+            footballForm.setPostion(resultSet.getString("postion"));
+            footballForm.setTeamName(resultSet.getString("teamName"));
+            footballs.add(footballForm);
         }
         resultSet.close();
         connection.close();
@@ -52,15 +54,14 @@ public class FootballServiceImpl implements FootballService {
         Connection connection = null;
         connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        PreparedStatement preparedStatement = null;
-        String sql;
-        sql = "INSERT INTO football_manager(name, age, height, nationality, postion) values(?, ?, ? ,? ,?)";
-        preparedStatement = connection.prepareStatement(sql);
+        String sql = "INSERT INTO football_manager(name, age, height, nationality, postion, teamId) values(?, ?, ? ,? ,?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, football.getName());
         preparedStatement.setInt(2, football.getAge());
         preparedStatement.setInt(3, football.getHeight());
         preparedStatement.setString(4, football.getNationality());
         preparedStatement.setString(5, football.getPostion());
+        preparedStatement.setInt(6, football.getTeamId());
 
         int insertRecord = preparedStatement.executeUpdate();
 
@@ -88,6 +89,7 @@ public class FootballServiceImpl implements FootballService {
             football.setHeight(resultSet.getInt("height"));
             football.setNationality(resultSet.getString("nationality"));
             football.setPostion(resultSet.getString("postion"));
+            football.setTeamId(resultSet.getInt("teamId"));
         }
         connection.close();
         preparedStatement.close();

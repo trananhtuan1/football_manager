@@ -17,7 +17,7 @@
     <h3>Are You Sure?</h3>
     </p>
     <p>
-        <input type="submit" value="delete team">
+        <input type="submit" value="delete teamName">
     </p>
 </form>
 </body>
