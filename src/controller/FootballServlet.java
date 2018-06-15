@@ -1,8 +1,11 @@
 package controller;
 
 import model.Football;
+import model.Teams;
 import service.FootballService;
 import service.FootballServiceImpl;
+import service.TeamsService;
+import service.TeamsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +19,7 @@ import java.util.List;
 @WebServlet(name = "FootballServlet", urlPatterns = "/display")
 public class FootballServlet extends javax.servlet.http.HttpServlet {
     private FootballService footballService = new FootballServiceImpl();
+    private TeamsService teamsService = new TeamsServiceImpl();
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String action = request.getParameter("action");
@@ -23,9 +27,9 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
             action = "";
         }
         switch (action) {
-            case "create":
-                createFootball(request, response);
-                break;
+//            case "create":
+//                createFootball(request, response);
+//                break;
             case "edit":
                 editFootball(request, response);
                 break;
@@ -92,29 +96,29 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
         }
     }
 
-    private void createFootball(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String name = request.getParameter("name");
-            int age = Integer.parseInt(request.getParameter("age"));
-            int height = Integer.parseInt(request.getParameter("height"));
-            String nationality = request.getParameter("nationality");
-            String postion = request.getParameter("postion");
-
-            Football football = new Football(name, age, height, nationality, postion);
-            this.footballService.save(football);
-            request.setAttribute("message", "done");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void createFootball(HttpServletRequest request, HttpServletResponse response) {
+//        try {
+//            String name = request.getParameter("name");
+//            int age = Integer.parseInt(request.getParameter("age"));
+//            int height = Integer.parseInt(request.getParameter("height"));
+//            String nationality = request.getParameter("nationality");
+//            String postion = request.getParameter("postion");
+//
+//            Football football = new Football(name, age, height, nationality, postion);
+//            this.footballService.save(football);
+//            request.setAttribute("message", "done");
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
+//            dispatcher.forward(request, response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String action = request.getParameter("action");
@@ -134,8 +138,29 @@ public class FootballServlet extends javax.servlet.http.HttpServlet {
                 showViewFootball(request, response);
                 break;
             default:
-                showListFootballs(request, response);
+                showListTeam(request, response);
                 break;
+//            default:
+//                showListFootballs(request, response);
+//                break;
+        }
+    }
+
+    private void showListTeam(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<Teams> teams = this.teamsService.findAll();
+            List<Football>footballs = this.footballService.findAll();
+            request.setAttribute("x1", footballs);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/viewListTeamFootball.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

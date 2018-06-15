@@ -12,12 +12,31 @@
 </head>
 <body>
 <p>
-    <fieldset>
+    <a href="/display">Back</a>
+</p>
+<p>
+<fieldset>
     <legend>Detail Name</legend>
     <table>
         <tr>
             <td>Name</td>
             <td>${requestScope["view"].getName()}</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>${requestScope["view"].getAge()}</td>
+        </tr>
+        <tr>
+            <td>Height</td>
+            <td>${requestScope["view"].getHeight()}</td>
+        </tr>
+        <tr>
+            <td>Nationality</td>
+            <td>${requestScope["view"].getNationality()}</td>
+        </tr>
+        <tr>
+            <td>Postion</td>
+            <td>${requestScope["view"].getPostion()}</td>
         </tr>
     </table>
 </fieldset>

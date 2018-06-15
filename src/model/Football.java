@@ -7,15 +7,17 @@ public class Football {
     private int height;
     private String nationality;
     private String postion;
+    private String team;
 
     public Football(){}
 
-    public Football(String name, int age, int height, String nationality, String postion){
+    public Football(String name, int age, int height, String nationality, String postion, String team){
         this.name = name;
         this.age = age;
         this.height = height;
         this.nationality = nationality;
         this.postion = postion;
+        this.team = team;
     }
 
     public int getId() {
@@ -65,4 +67,13 @@ public class Football {
     public void setPostion(String postion) {
         this.postion = postion;
     }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
 }
+

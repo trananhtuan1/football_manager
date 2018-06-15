@@ -27,6 +27,59 @@ public class TeamsServlet extends HttpServlet {
             case "create":
                 createTeam(request, response);
                 break;
+            case "edit":
+                editTeam(request, response);
+                break;
+            case "delete":
+                deleteTeam(request, response);
+                break;
+        }
+    }
+
+    private void deleteTeam(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            Teams teams = this.teamsService.findById(id);
+            RequestDispatcher dispatcher;
+            if (teams == null) {
+                dispatcher = request.getRequestDispatcher("/error.jsp");
+            } else {
+                this.teamsService.remove(id);
+                response.sendRedirect("/teams");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editTeam(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        try {
+            Teams teams = this.teamsService.findById(id);
+            RequestDispatcher dispatcher;
+            if (teams == null) {
+                dispatcher = request.getRequestDispatcher("/error.jsp");
+            } else {
+                teams.setName(name);
+                this.teamsService.update(id, teams);
+                request.setAttribute("edit", teams);
+                request.setAttribute("message", "done");
+                dispatcher = request.getRequestDispatcher("/editTeam.jsp");
+            }
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -64,18 +117,59 @@ public class TeamsServlet extends HttpServlet {
             case "delete":
                 showDeleteTeam(request, response);
                 break;
+            case "view":
+                viewTeam(request, response);
+                break;
             default:
                 showListTeams(request, response);
                 break;
         }
     }
 
+    private void viewTeam(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            Teams teams = this.teamsService.findById(id);
+            RequestDispatcher dispatcher;
+            if (teams == null) {
+                dispatcher = request.getRequestDispatcher("/error.jsp");
+            } else {
+                request.setAttribute("view", teams);
+                dispatcher = request.getRequestDispatcher("/viewTeam.jsp");
+            }
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showDeleteTeam(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-//        try{
-//            Teams teams = this.teamsService.findById(id);
-
-//        }
+        try {
+            Teams teams = this.teamsService.findById(id);
+            RequestDispatcher dispatcher;
+            if (teams == null) {
+                dispatcher = request.getRequestDispatcher("/error.jsp");
+            } else {
+                request.setAttribute("delete", teams);
+                dispatcher = request.getRequestDispatcher("/deleteTeam.jsp");
+            }
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showEditTeam(HttpServletRequest request, HttpServletResponse response) {
@@ -88,8 +182,9 @@ public class TeamsServlet extends HttpServlet {
             } else {
                 request.setAttribute("edit", teams);
                 dispatcher = request.getRequestDispatcher("/editTeam.jsp");
+                dispatcher.forward(request, response);
             }
-            dispatcher.forward(request, response);
+
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {

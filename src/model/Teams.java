@@ -8,8 +8,7 @@ public class Teams {
     public Teams() {
     }
 
-    public Teams(int id, String name) {
-        this.id = id;
+    public Teams(String name) {
         this.name = name;
     }
 

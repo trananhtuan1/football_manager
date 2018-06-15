@@ -63,6 +63,9 @@
                 </td>
             </tr>
             <tr>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
                 <td><input type="submit" value="Create player"></td>
             </tr>
         </table>

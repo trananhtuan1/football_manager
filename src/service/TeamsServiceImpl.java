@@ -92,8 +92,8 @@ public class TeamsServiceImpl implements TeamsService {
         String sql;
         sql = "UPDATE teams SET name = ? WHERE id = ?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, teams.getId());
-        preparedStatement.setString(2, teams.getName());
+        preparedStatement.setString(1, teams.getName());
+        preparedStatement.setInt(2, teams.getId());
 
         int insertRecord = preparedStatement.executeUpdate();
         connection.close();

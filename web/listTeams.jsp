@@ -23,12 +23,12 @@
         <td>Edit</td>
         <td>Delete</td>
     </tr>
-    <c:forEach items='${requestScope["x1"]}' var="view">
+    <c:forEach items='${requestScope["x1"]}' var="viewTeam">
         <tr>
-            <td><a href="/teams?action=id&view=${view.getId()}">${view.getId()}</a></td>
-            <td>${view.getName()}</td>
-            <td><a href="/teams?action=id&edit=${view.getId()}">Edit</a></td>
-            <td><a href="/teams?action=id&delete=${view.getId()}">Delete</a></td>
+            <td><a href="/teams?action=view&id=${viewTeam.getId()}">${viewTeam.getId()}</a></td>
+            <td>${viewTeam.getName()}</td>
+            <td><a href="/teams?action=edit&id=${viewTeam.getId()}">Edit</a></td>
+            <td><a href="/teams?action=delete&id=${viewTeam.getId()}">Delete</a></td>
         </tr>
     </c:forEach>
 </table>

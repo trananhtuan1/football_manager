@@ -23,7 +23,7 @@ public class FootballServiceImpl implements FootballService {
 
         PreparedStatement preparedStatement = null;
         String sql;
-        sql = "SELECT * FROM football_manager";
+        sql = "SELECT football_manager.id,football_manager.name, age, height, nationality, postion, teams.name as team from football_manager join teams on football_manager.teamId = teams.id ";
         preparedStatement = connection.prepareStatement(sql);
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -36,6 +36,7 @@ public class FootballServiceImpl implements FootballService {
             football.setHeight(resultSet.getInt("height"));
             football.setNationality(resultSet.getString("nationality"));
             football.setPostion(resultSet.getString("postion"));
+            football.setTeam(resultSet.getString("team"));
             footballs.add(football);
         }
         resultSet.close();
@@ -103,7 +104,7 @@ public class FootballServiceImpl implements FootballService {
 
         PreparedStatement preparedStatement = null;
         String sql;
-        sql = "UPDATE football_manager SET name = ?, age = ?, height = ?, nationality = ?, postion = ? where id = ?";
+        sql = "UPDATE football_manager SET name = ?, age = ?, height = ?, nationality = ?, postion = ?, name = ? where id = ?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, football.getName());
         preparedStatement.setInt(2, football.getAge());
